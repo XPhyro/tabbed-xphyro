@@ -42,8 +42,10 @@ static Key keys[] = {
 
 	/* { MODKEY,                          XK_k,      rotate,      { .i = -1 } }, */
 	/* { MODKEY,                          XK_j,      rotate,      { .i = +1 } }, */
-	/* { MODKEY|ShiftMask|ControlMask,    XK_k,      movetab,     { .i = -1 } }, */
-	/* { MODKEY|ShiftMask|ControlMask,    XK_j,      movetab,     { .i = +1 } }, */
+	{ MODKEY,                          XK_bracketleft,      moverel,     { .i = -1 } },
+	{ MODKEY,                          XK_bracketright,     moverel,     { .i = +1 } },
+	{ MODKEY|ShiftMask,                XK_bracketleft,      movetab,     { .i = -1 } },
+	{ MODKEY|ShiftMask,                XK_bracketright,     movetab,     { .i = +1 } },
 	/* { MODKEY,                          XK_Tab,    rotate,      { .i = 0 } }, */
 
 	/* { MODKEY,                          XK_grave,  spawn,       SETPROP("_TABBED_SELECT_TAB") }, */
@@ -60,8 +62,8 @@ static Key keys[] = {
 
 	{ MODKEY,                          XK_q,      killclient,  { 0 } },
 
-	{ MODKEY|ControlMask,              XK_u,      focusurgent, { 0 } },
+	/* { MODKEY|ControlMask,              XK_u,      focusurgent, { 0 } }, */
 	/* { MODKEY|ShiftMask,                XK_u,      toggle,      { .v = (void*) &urgentswitch } }, */
 
-	{ 0,                               XK_F11,    fullscreen,  { 0 } },
+	/* { 0,                               XK_F11,    fullscreen,  { 0 } }, */
 };
