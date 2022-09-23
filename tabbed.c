@@ -117,6 +117,7 @@ static void killclient(const Arg *arg);
 static void manage(Window win);
 static void maprequest(const XEvent *e);
 static void move(const Arg *arg);
+static void moverel(const Arg *arg);
 static void movetab(const Arg *arg);
 static void propertynotify(const XEvent *e);
 static void resize(int c, int w, int h);
@@ -791,6 +792,14 @@ move(const Arg *arg)
 {
 	if (arg->i >= 0 && arg->i < nclients)
 		focus(arg->i);
+}
+
+void
+moverel(const Arg *arg)
+{
+	int requestsel = sel + arg->i;
+	if (requestsel >= 0 && requestsel < nclients)
+		focus(requestsel);
 }
 
 void
