@@ -857,7 +857,7 @@ maprequest(const XEvent *e)
 void
 move(const Arg *arg)
 {
-	focus(MAX(0, MIN(arg->i, nclients - 1)));
+	focus(MAX(0, MIN(arg->i < 0 ? nclients - arg->i : arg->i, nclients - 1)));
 }
 
 void
