@@ -98,7 +98,7 @@ static void createnotify(const XEvent *e);
 static void destroynotify(const XEvent *e);
 static void die(const char *errstr, ...);
 static void drawbar(void);
-static void drawtext(const char *text, XftColor col[ColLast]);
+static void drawtext(int c, const char *text, XftColor col[ColLast]);
 static void *ecalloc(size_t n, size_t size);
 static void *erealloc(void *o, size_t size);
 static void expose(const XEvent *e);
@@ -373,7 +373,7 @@ drawbar(void)
 		dc.x = 0;
 		dc.w = ww;
 		XFetchName(dpy, win, &name);
-		drawtext(name ? name : "", dc.norm);
+		drawtext(0, name ? name : "", dc.norm);
 		XCopyArea(dpy, dc.drawable, win, dc.gc, 0, 0, ww, vbh, 0, 0);
 		XSync(dpy, False);
 
@@ -397,14 +397,14 @@ drawbar(void)
 	if ((fc = getfirsttab()) + cc < nclients) {
 		dc.w = TEXTW(after);
 		dc.x = width - dc.w;
-		drawtext(after, dc.sel);
+		drawtext(0, after, dc.sel);
 		width -= dc.w;
 	}
 	dc.x = 0;
 
 	if (fc > 0) {
 		dc.w = TEXTW(before);
-		drawtext(before, dc.sel);
+		drawtext(0, before, dc.sel);
 		dc.x += dc.w;
 		width -= dc.w;
 	}
@@ -419,9 +419,9 @@ drawbar(void)
 			col = clients[c]->urgent ? dc.urg : dc.norm;
 		}
 		if (basenametitles)
-			drawtext(clients[c]->basename, col);
+			drawtext(c - fc, clients[c]->basename, col);
 		else
-			drawtext(clients[c]->name, col);
+			drawtext(c - fc, clients[c]->name, col);
 		dc.x += dc.w;
 		clients[c]->tabx = dc.x;
 	}
@@ -430,7 +430,7 @@ drawbar(void)
 }
 
 void
-drawtext(const char *text, XftColor col[ColLast])
+drawtext(int c, const char *text, XftColor col[ColLast])
 {
 	int i, j, x, y, h, len, olen;
 	char buf[256];
@@ -438,7 +438,7 @@ drawtext(const char *text, XftColor col[ColLast])
 	XRectangle tab = { dc.x+separator, dc.y, dc.w-separator, dc.h };
 	XRectangle sep = { dc.x, dc.y, separator, dc.h };
 
-	if (separator) {
+	if (separator && c) {
 		XSetForeground(dpy, dc.gc, col[ColFG].pixel);
 		XFillRectangles(dpy, dc.drawable, dc.gc, &sep, 1);
 	}
