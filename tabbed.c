@@ -435,7 +435,7 @@ drawtext(int c, const char *text, XftColor col[ColLast])
 	int i, j, x, y, h, len, olen;
 	char buf[256];
 	XftDraw *d;
-	XRectangle tab = { dc.x+separator, dc.y, dc.w-separator, dc.h };
+	XRectangle tab = { !c ? dc.x : dc.x+separator, dc.y, !c ? dc.w : dc.w-separator, dc.h };
 	XRectangle sep = { dc.x, dc.y, separator, dc.h };
 
 	if (separator && c) {
